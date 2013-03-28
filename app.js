@@ -29,6 +29,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.openrov_command = "no command issued";
+
 require('./routes/index.coffee')(app);
 
 http.createServer(app).listen(app.get('port'), function(){

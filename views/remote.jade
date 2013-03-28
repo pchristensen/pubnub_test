@@ -6,12 +6,17 @@ html
     script(type='text/javascript', src='http://cdn.pubnub.com/pubnub-3.4.2.min.js')
   body
     | remote
-    // Send to pubnub like this: https://github.com/pubnub/pubnub-api/tree/master/javascript-modern/3.3
+
     input#up(type="button", value="UP")
     input#down(type="button", value="DOWN")
     input#left(type="button", value="LEFT")
     input#right(type="button", value="RIGHT")
     input#forward(type="button", value="FORWARD")
     input#backward(type="button", value="BACKWARD")
+
+    | Pubnub latency:
+    #pubnub_latency
+    #command= cmd
+
 
     script(type='text/javascript', src='/javascripts/remote.js')

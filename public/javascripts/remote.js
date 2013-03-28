@@ -1,4 +1,3 @@
-(function(){
     // ----------------------------------
     // INIT PUBNUB
     // ----------------------------------
@@ -16,6 +15,13 @@
         channel  : 'my_channel',
         callback : function(message) {
             console.log(JSON.stringify(message));
+            received = message.received;
+            if (received != undefined) {
+              pubnub_timestamp = new Date().getTime();
+              time_diff = pubnub_timestamp - timestamp;
+              console.log("pubnub time diff: " + time_diff);
+              $("#pubnub_latency").text(time_diff);
+            }
         },
         disconnect : function() {
             console.log("Connection Lost");
@@ -28,16 +34,26 @@
     function send_hello() {
         pubnub.publish({
             channel  : 'my_channel',
-            message  : { example : "Hello World!" },
+            message  : { example : "Remote listening on real-time channel" },
             callback : function(info) {
                 console.log(JSON.stringify(info));
             }
         });
     }
-})();
+
+var timestamp = new Date().getTime();
+var pubnub_timestamp = new Date().getTime();
+var server_timestamp = new Date().getTime();
 
 var ch = function commandHandler(command) {
-  alert(command);
+  timestamp = new Date().getTime();
+  pubnub.publish({
+    channel  : 'my_channel',
+    message  : { cmd : command },
+    callback : function(info) {
+      console.log(JSON.stringify(info));
+    }
+  });
 };
 
 $("#up").click(function() { ch("move up"); });

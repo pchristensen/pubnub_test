@@ -9,9 +9,12 @@ routes = (app) ->
     res.render 'cockpit'
 
   app.get "/remote", (req, res) ->
-    res.render 'remote'
+    res.render 'remote',
+      cmd: app.openrov_command
 
-  ## app.post "/command"
+  app.post "/command", (req, res) ->
+    console.log "received a /command post " + req.body.cmd
+    app.openrov_command = req.body.cmd
   ## app.get "/command"
 
 module.exports = routes
