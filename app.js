@@ -33,6 +33,10 @@ app.openrov_command = "no command issued";
 
 require('./routes/index.coffee')(app);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+
+require('./socket-io')(app, server);
+
+server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });

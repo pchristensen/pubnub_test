@@ -14,17 +14,17 @@
         connect  : send_hello,
         channel  : 'my_channel',
         callback : function(message) {
-            console.log(JSON.stringify(message));
-            received = message.received;
-            if (received != undefined) {
-              pubnub_timestamp = new Date().getTime();
-              time_diff = pubnub_timestamp - timestamp;
-              console.log("pubnub time diff: " + time_diff);
-              $("#pubnub_latency").text(time_diff);
-            }
+          console.log(JSON.stringify(message));
+          received = message.received;
+          if (received != undefined) {
+            pubnub_timestamp = new Date().getTime();
+            time_diff = pubnub_timestamp - timestamp;
+            console.log("pubnub time diff: " + time_diff);
+            $("#pubnub_latency").text(time_diff);
+          }
         },
         disconnect : function() {
-            console.log("Connection Lost");
+          console.log("Connection Lost");
         }
     });
 
@@ -62,3 +62,11 @@ $("#left").click(function() { ch("move left"); });
 $("#right").click(function() { ch("move right"); });
 $("#forward").click(function() { ch("move forward"); });
 $("#backward").click(function() { ch("move backward"); });
+
+socket = io.connect("/");
+socket.on("command:changed", function(data) {
+  console.log("RECEIVED COMMAND FROM SERVER" + data);
+  server_timestamp = new Date().getTime();
+  var time_diff = server_timestamp - timestamp;
+  $("#server_latency").text(time_diff);
+});

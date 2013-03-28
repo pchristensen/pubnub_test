@@ -15,6 +15,7 @@ routes = (app) ->
   app.post "/command", (req, res) ->
     console.log "received a /command post " + req.body.cmd
     app.openrov_command = req.body.cmd
-  ## app.get "/command"
+    if socketIO = app.settings.socketIO
+      socketIO.sockets.emit "command:changed", app.openrov_command
 
 module.exports = routes

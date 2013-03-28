@@ -4,6 +4,7 @@ html
     title= "REMOTE"
     script(type='text/javascript', src='http://code.jquery.com/jquery-1.9.1.min.js')
     script(type='text/javascript', src='http://cdn.pubnub.com/pubnub-3.4.2.min.js')
+    script(type='text/javascript', src='/socket.io/socket.io.js')
   body
     | remote
 
@@ -14,9 +15,15 @@ html
     input#forward(type="button", value="FORWARD")
     input#backward(type="button", value="BACKWARD")
 
+    br
+
     | Pubnub latency:
     #pubnub_latency
-    #command= cmd
 
+    | Server/socket.io latency:
+    #server_latency
+
+    | Command
+    #command= cmd
 
     script(type='text/javascript', src='/javascripts/remote.js')
